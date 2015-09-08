@@ -81,7 +81,7 @@ void update(void){
 
     // If button type is NC (normally closed) invert the state value
     if(inputs[i].type == NC)
-      state != state;
+      state = !state;
 
     if(state != inputs[i].state && (millis() - inputs[i].last_change) > DEBOUNCE_DELAY) // has this input changed state since the last time we checked?
     {
