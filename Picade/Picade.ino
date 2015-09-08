@@ -12,27 +12,27 @@
 
 /* Change key bindings below */
 static input inputs[] = {
-  { KEY_UP_ARROW,    UP     },
-  { KEY_DOWN_ARROW,  DOWN   },
-  { KEY_LEFT_ARROW,  LEFT   },
-  { KEY_RIGHT_ARROW, RIGHT  },
+  { KEY_UP_ARROW,    UP    , NO },
+  { KEY_DOWN_ARROW,  DOWN  , NO },
+  { KEY_LEFT_ARROW,  LEFT  , NO },
+  { KEY_RIGHT_ARROW, RIGHT , NO },
 
-  { KEY_LEFT_CTRL,   BTN_1  },
-  { KEY_LEFT_ALT,    BTN_2  },
-  { ' ',             BTN_3  },
-  { KEY_LEFT_SHIFT,  BTN_4  },
-  { 'z',             BTN_5  },
-  { 'x',             BTN_6  },
+  { KEY_LEFT_CTRL,   BTN_1 , NO },
+  { KEY_LEFT_ALT,    BTN_2 , NO },
+  { ' ',             BTN_3 , NO },
+  { KEY_LEFT_SHIFT,  BTN_4 , NC },
+  { 'z',             BTN_5 , NO },
+  { 'x',             BTN_6 , NO },
 
-  { 's',             START  },
-  { 'c',             COIN   },
-  { KEY_RETURN,      ENTER  },
-  { KEY_ESC,         ESCAPE },
+  { 's',             START , NC },
+  { 'c',             COIN  , NC },
+  { KEY_RETURN,      ENTER , NO },
+  { KEY_ESC,         ESCAPE, NO },
 
 #ifndef ENABLE_VOLUME_BUTTONS
   /* Change these lines to set key bindings for VOL_UP and VOL_DN */
-   { 'u',      VOL_UP  },
-   { 'd',      VOL_DN },
+   { 'u',            VOL_UP, NO },
+   { 'd',            VOL_DN, NO },
 #endif
 };
 
@@ -78,6 +78,10 @@ void update(void){
   {
     // test for current state of this input
     boolean state = !digitalRead(inputs[i].pin);
+
+    // If button type is NC (normally closed) invert the state value
+    if(inputs[i].type == NC)
+      state != state;
 
     if(state != inputs[i].state && (millis() - inputs[i].last_change) > DEBOUNCE_DELAY) // has this input changed state since the last time we checked?
     {

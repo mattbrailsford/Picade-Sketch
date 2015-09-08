@@ -40,11 +40,15 @@
 
 #define BLINK_LED   13 // PC7
 
+#define NO          0 // Normally open
+#define NC          1 // Normall closed
+
 typedef struct
 {
-  char    key;      // keycode to emit when input is pressed
-  char    pin;      // Arduino pin number for this input
-  boolean state;    // what state was the input last in ( HIGH/LOW )
+  char    key;       // keycode to emit when input is pressed
+  char    pin;       // Arduino pin number for this input
+  char    type;      // The type of button (NO or NC)
+  boolean state;     // what state was the input last in ( HIGH/LOW )
   unsigned long last_change;
 } input;
 
